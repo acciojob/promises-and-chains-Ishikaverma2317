@@ -1,13 +1,47 @@
 <!DOCTYPE html>
-
 <html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
+<head>
+  <title>Promise Voting Eligibility</title>
+</head>
+<body>
 
-  <body>
-    <!-- write the body here -->
+  <form id="form">
+    <input type="number" id="age" placeholder="Enter age" />
+    <input type="text" id="name" placeholder="Enter name" />
+    <button type="submit" id="btn">Submit</button>
+  </form>
 
-    <script type="text/javascript" src="./script.js"></script>
-  </body>
+  <script>
+    const form = document.getElementById("form");
+    const ageInput = document.getElementById("age");
+    const nameInput = document.getElementById("name");
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const age = ageInput.value.trim();
+      const name = nameInput.value.trim();
+
+      if (age === "" || name === "") {
+        alert("Please enter valid details.");
+        return;
+      }
+
+      const checkAge = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          if (Number(age) > 18) {
+            resolve(`Welcome, ${name}. You can vote.`);
+          } else {
+            reject(`Oh sorry ${name}. You aren't old enough.`);
+          }
+        }, 4000);
+      });
+
+      checkAge
+        .then(msg => alert(msg))
+        .catch(err => alert(err));
+    });
+  </script>
+
+</body>
 </html>
