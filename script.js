@@ -1,30 +1,25 @@
-const form = document.querySelector("form");
-const btn = document.getElementById("btn");
-const ageInput = document.getElementById("age");
-const nameInput = document.getElementById("name");
+document.getElementById("btn").addEventListener("click", function (event) {
+    event.preventDefault();
 
-btn.addEventListener("click", function (e) {
-  e.preventDefault();
+    const age = document.getElementById("age").value.trim();
+    const name = document.getElementById("name").value.trim();
 
-  const age = ageInput.value.trim();
-  const name = nameInput.value.trim();
+    if (age === "" || name === "") {
+        alert("Please enter valid details.");
+        return;
+    }
 
-  
-  if (age === "" || name === "") {
-    alert("Please enter valid details.");
-    return;
-  }
+    const promise = new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (Number(age) > 18) {
+                resolve(`Welcome, ${name}. You can vote.`);
+            } else {
+                reject(`Oh sorry ${name}. You aren't old enough.`);
+            }
+        }, 4000);
+    });
 
-
-  new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (Number(age) > 18) {
-        resolve(`Welcome, ${name}. You can vote.`);
-      } else {
-        reject(`Oh sorry ${name}. You aren't old enough.`);
-      }
-    }, 4000);
-  })
-    .then((msg) => alert(msg))
-    .catch((err) => alert(err));
+    promise
+        .then(msg => alert(msg))
+        .catch(err => alert(err));
 });
